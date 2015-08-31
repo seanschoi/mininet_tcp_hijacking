@@ -71,13 +71,18 @@ def stop_sshd():
     info( '*** Shutting down stale sshd/Banner processes ',
           quietRun( "pkill -9 -f Banner" ), '\n' )
 
-def create_attack_log(host):
-    host.cmd("chmod 666 /home/mininet/sshmitm/decoded.log>>!#:2")
-    host.cmd("chmod 666 /home/mininet/sshmitm/logfile.log>>!#:2")
+def start_telnet(host):
+    "Start telnet on host"
+    stop_telnet(host)
+    info( '*** Starting sshd in %s\n' % host.name )
+    name, intf, ip = host.name, host.defaultIntf(), host.IP()
+    host.cmd('sudo /etc/init.d/xinetd start')
+    info( '***', host.name, 'is running telnet on', intf, 'at', ip, '\n' )
 
-def delete_attack_log(host):
-    host.cmd("rm /home/mininet/sshmitm/decoded.log")
-    host.cmd("rm /home/mininet/sshmitm/logfile.log")
+def stop_telnet(host):
+    "Stops telnet on the given host"
+    info( '*** Shutting down telnet\n' )
+    host.cmd('sudo /etc/init.d/xinetd stop')
 
 def main():
     topo = AttackTopo()
@@ -87,11 +92,9 @@ def main():
     print net.items()
     h1, h2, attacker, s1 = net.get('h1', 'h2', 'h3', 's1')
     # Start a ssh server on host 2
-    start_sshd(h2)
-    create_attack_log(attacker)
+    start_telnet(h2)
     CLI(net)
-    stop_sshd()
-    delete_attack_log(attacker)
+    stop_telnet(h2)
     net.stop()
 
 if __name__ == '__main__':
