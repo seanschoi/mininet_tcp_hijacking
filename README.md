@@ -78,12 +78,14 @@ If using ssh terminal to access your VM, you may need to add `-Y` parameter for 
 
 ### Set up IP forwarding and start ettercap on the Attacker
 
+#### (Optional) Set up IP Forwarding
 In host 3's terminal, run the following command to set up ip forwarding.
 ```
 echo 1 > /proc/sys/net/ipv4/ip_forward, cat /proc/sys/net/ipv4/ip_forward
 ```
 This enables linux kernel IP forwarding, so that it can forward packets received from a host to another host.
 
+#### Start Ettercap
 Run ettercap using the following command on `h3`
 ```
 ./run_ettercap.sh
@@ -106,7 +108,7 @@ This part will initialize the sniffing as well as arp spoofing. More about ARP s
 4. `Hosts` -> `Host List` to view the hosts. You will see `h1, h2` as defined by their IP addresses.
 5. Add `192.168.0.3` to target 1 and `192.168.0.4` to target 2.
 6. Check that the targets are assigned correctly by going to  `Targets` -> `Current Targets`
-7. Enable ARP Spoofing as follows. `Mitm` -> `ARP Spoofing` -> Check `Sniff Remote Connections` -> Click `Ok`.
+7. Enable ARP Spoofing as follows. `Mitm` -> `Arp poisoning` -> Check `Sniff Remote Connections` -> Click `Ok`.
   Check the log to see that GROUP assignments are similar to your targets.
 8. `Start` -> `Start Sniffing`
 
