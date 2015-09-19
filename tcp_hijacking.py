@@ -89,7 +89,11 @@ def main():
     info( '*** Creating network\n' )
     net = Mininet(topo=topo)
     net.start()
-    print net.items()
+
+    # Print the elements of the network
+    for item in net.items():
+        print item
+
     h1, h2, attacker, s1 = net.get('h1', 'h2', 'h3', 's1')
     # Start a ssh server on host 2
     start_telnet(h2)
