@@ -1,0 +1,13 @@
+# Filter to make the client accept anything
+if (ip.proto == TCP && tcp.dst == 8000) {
+    if (search(DATA.data, "Accept-Encoding")) {
+        replace("Accept-Encoding", "Accept-Rubbish!");
+        msg("Zapped!");
+    }
+}
+
+# Filter to redirect the message
+if (ip.proto == TCP && tcp.src == 8000) {
+    replace("Hello World", "GoodBye World :(");
+    msg("redirect success\n");
+}

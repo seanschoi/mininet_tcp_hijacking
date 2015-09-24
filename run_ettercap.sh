@@ -1,4 +1,3 @@
 #!/bin/bash
 
-#ettercap -G --filter etter_filter_ssh_co
-ettercap -G
+ettercap -G --filter etter_filter_tcp_co &
