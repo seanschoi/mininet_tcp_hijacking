@@ -19,6 +19,23 @@ Simply run `sudo apt-get install ettercap-graphical`
 #### Others
 Refer to https://github.com/Ettercap/ettercap for detailed instructions on building and installing ettercap
 
+#### Change the conf
+Under /etc/ettercap/etter.conf make the following changes
+
+From
+```
+# if you use iptables:
+# redir_command_on = "iptables -t nat -A PREROUTING -i %iface -p tcp --dport %port -j REDIRECT --to-port %rport"
+# redir_command_off = "iptables -t nat -D PREROUTING -i %iface -p tcp --dport %port -j REDIRECT --to-port %rport"
+```
+
+To
+```
+# if you use iptables:
+redir_command_on = "iptables -t nat -A PREROUTING -i %iface -p tcp --dport %port -j REDIRECT --to-port %rport"
+redir_command_off = "iptables -t nat -D PREROUTING -i %iface -p tcp --dport %port -j REDIRECT --to-port %rport"
+```
+
 ### Telnet Installation
 
 This is an instruction to install Telnet specifically for Ubuntu 14.04 with xinetd. For other operation systems, please use this as a reference, but note that it may not be applicable.
